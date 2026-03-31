@@ -1,0 +1,9 @@
+{
+  "name": "taskflow",
+  "version": "1.0.0",
+  "description": "Task management with an AI co-pilot — powered by cocapn",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
