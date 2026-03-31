@@ -1,0 +1,8 @@
+{
+  "mode": "private",
+  "port": 3100,
+  "llm": {
+    "provider": "deepseek",
+    "model": "deepseek-chat"
+  }
+}
