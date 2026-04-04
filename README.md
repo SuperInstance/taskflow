@@ -1,86 +1,59 @@
-# TaskFlow
+<p align="center">
+  <img src="https://raw.githubusercontent.com/Lucineer/capitaine/master/docs/capitaine-logo.jpg" alt="Capitaine" width="120">
+</p>
 
-Kanban board with an AI co-pilot — powered by [cocapn](https://github.com/nicobailon/cocapn).
+<h1 align="center">taskflow</h1>
 
-## What is TaskFlow?
+<p align="center">Kanban board with a repo-agent project manager.</p>
 
-TaskFlow is a task management app with a built-in AI agent that understands your board. The cocapn agent lives inside the sidebar, analyzes your tasks in real-time, and helps your team stay focused and unblocked.
+---
 
-### Features
+**Vessel stub** · Needs `worker.ts` to deploy · Part of the [Lucineer fleet](https://github.com/orgs/Lucineer/repositories)
 
-- **Kanban board** with three columns: To Do, In Progress, Done
-- **Drag-and-drop** tasks between columns (HTML5 drag/drop)
-- **Priority badges** — color-coded: low, medium, high, critical
-- **Assignee avatars** with colored initials
-- **AI co-pilot** sidebar — ask questions about your board, get standup summaries, identify blockers
-- **Task CRUD** — create, update, delete tasks via REST API
-- **Dark theme** — easy on the eyes, built for focus
-- **Responsive** — works on desktop and mobile
+## Status
 
-### How cocapn Makes It Sentient
+🟡 Hull not yet deployed. Fork and add a `worker.ts` to bring this vessel online.
 
-The cocapn agent reads the current board state as context with every chat message. It knows:
-- How many tasks are in each column
-- What priorities exist and who's assigned
-- The history and age of each task
+## The Fleet
 
-The agent's personality is defined in `cocapn/soul.md` — edit it to change how the co-pilot behaves.
 
-## Quick Start
+<details>
+<summary><strong>⚓ The Fleet</strong></summary>
 
-### Terminal 1: Start the cocapn agent
+**Flagship vessels**
 
-```bash
-cd /tmp/taskflow
-npx cocapn --web --port 3100
-```
+- [cocapn.ai](https://github.com/Lucineer/capitaine)
+- [personallog.ai](https://github.com/Lucineer/personallog-ai)
+- [businesslog.ai](https://github.com/Lucineer/businesslog-ai)
+- [studylog.ai](https://github.com/Lucineer/studylog-ai)
+- [makerlog.ai](https://github.com/Lucineer/makerlog-ai)
+- [playerlog.ai](https://github.com/Lucineer/playerlog-ai)
+- [dmlog.ai](https://github.com/Lucineer/dmlog-ai)
+- [reallog.ai](https://github.com/Lucineer/reallog-ai)
+- [deckboss.ai](https://github.com/Lucineer/deckboss-ai)
 
-### Terminal 2: Start the app
+**Fleet services**
 
-```bash
-cd /tmp/taskflow
-node server.js
-```
+- [Fleet Catalog](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
+- [Git Agent (full)](https://github.com/Lucineer/git-agent)
+- [Cocapn Lite (minimal)](https://github.com/Lucineer/cocapn-lite)
+- [Fleet Orchestrator](https://github.com/Lucineer/fleet-orchestrator)
+- [Dead Reckoning Engine](https://github.com/Lucineer/dead-reckoning-engine)
+- [Dream Engine](https://github.com/Lucineer/dream-engine)
+- [Seed UI (5 layers)](https://github.com/Lucineer/seed-ui)
 
-### Open in browser
+**For power users**
 
-```
-http://localhost:3000
-```
+- [Cocapn Lite (tabula rasa)](https://github.com/Lucineer/cocapn-lite)
+- [Cocapn (core platform)](https://github.com/Lucineer/cocapn)
+- [ZeroClaw (framework)](https://github.com/Lucineer/zeroclaw)
 
-## Architecture
+[View all 106 repos →](https://github.com/orgs/Lucineer/repositories)
+[Fleet manifest →](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
 
-```
-Browser (index.html)
-  │
-  ├── GET /api/tasks, POST /api/tasks, PUT /api/tasks/:id, DELETE /api/tasks/:id
-  │     → server.js → tasks.json
-  │
-  └── POST /api/agent/chat → server.js → cocapn (localhost:3100)
-       GET /api/agent/status
-```
+</details>
 
-- **server.js** — Pure Node.js HTTP server (no Express). Serves the UI and REST API. Proxies agent requests to cocapn.
-- **tasks.json** — Task persistence (auto-created).
-- **cocapn/** — Agent configuration: `soul.md` (personality), `cocapn.json` (runtime config).
-
-## Configuration
-
-Edit `cocapn/cocapn.json` to change the LLM provider:
-
-```json
-{
-  "mode": "private",
-  "port": 3100,
-  "llm": {
-    "provider": "deepseek",
-    "model": "deepseek-chat"
-  }
-}
-```
-
-Edit `cocapn/soul.md` to change the agent's personality, tone, and capabilities.
 
 ## License
 
-MIT
+MIT · Superinstance & Lucineer (DiGennaro et al.)
