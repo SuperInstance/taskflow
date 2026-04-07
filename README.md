@@ -1,55 +1,55 @@
 # TaskFlow
 
-You don't need another project management board that falls out of sync.
+You stop updating the ticket two hours before you finish the work. The kanban card never gets moved after the merge. We know.
 
----
+TaskFlow builds your project board directly from your team's git activity. Status updates happen when you push code, not when you remember to drag a card.
 
-## Why this exists
-Most kanban tools require duplicating work: writing tickets, moving cards, and updating statuses separate from your actual commits and PRs. TaskFlow builds your board directly from your team's existing git history.
+This is a Kanban board application built on the Cocapn Fleet runtime. It runs on your Cloudflare Workers account and uses your git history as the single source of truth.
 
-TaskFlow is a Kanban board that uses your git commit history as its source of truth. It is powered by the Cocapn Fleet.
+## Live Demo
 
----
+A public instance is available: [https://the-fleet.casey-digennaro.workers.dev/taskflow](https://the-fleet.casey-digennaro.workers.dev/taskflow)
 
-## Try the demo
-A live public instance is available: https://the-fleet.casey-digennaro.workers.dev/taskflow
+## How It Works
 
----
+This is not a SaaS tool with a git integration. There is no separate database, sync job, or background worker. Each time the board is loaded, it rebuilds the state live from your git provider's API.
 
-## What it does
--   **Status updates happen when you push code.** A card's column changes when you push a commit, open a pull request, or merge.
--   **There is no separate database.** Git is your source of truth. There's nothing additional to back up, sync, or corrupt.
--   **You host and control it.** This runs entirely on your Cloudflare account. Your credentials never leave your environment.
--   **It reflects work as it happened.** The board is derived from immutable git history, not manually edited statuses.
+You configure a connection to your git provider (GitHub, GitLab, etc.). The application reads your repository's branches, pull requests, and commits to infer task status, ownership, and progress.
+
+## What It Does
+
+*   **Automatic Status Updates:** Cards move based on git events: branching, committing, opening a pull request, merging.
+*   **Git as Source of Truth:** No parallel data store. The board reflects the actual work history in your repository.
+*   **Self-Hosted & Controlled:** Deploys to your Cloudflare account. Your credentials stay in your environment.
+*   **No Fake History:** The timeline is built from commits, not retrospective ticket edits.
 
 ## Key Features
-*   **Git as the System of Record:** Task state is inferred from commits, PRs, and merges.
-*   **Zero Dependencies:** A single Cloudflare Worker with no build step and no npm packages.
-*   **Self-Hosted BYOK:** All credentials are stored in your Cloudflare Secrets. No data is sent to external servers.
-*   **Fork-First Philosophy:** This is a complete, working application. Fork it and modify it for your needs.
 
----
+*   **Inferred State:** Task progress, owners, and timelines are derived 100% from commits, branches, and PRs.
+*   **Zero Dependencies:** A single Cloudflare Worker with no build step and zero npm packages.
+*   **Fork First:** This is complete, working software. Fork it, modify it, and own it without upstream lock-in.
+*   **BYOK Security:** All credentials are stored only in your Cloudflare Secrets.
 
 ## Quick Start
+
 1.  Fork this repository.
 2.  Deploy it to Cloudflare Workers.
-3.  Configure your git provider credentials as environment secrets.
-4.  Your board will populate from your default branch.
+3.  Configure your git provider credentials as Worker Secrets.
+4.  Load the application URL. Your board will populate from your connected repository.
 
 ## One Honest Limitation
-TaskFlow is designed for teams that coordinate work through git branches and pull requests. If your workflow doesn't use these mechanisms, the automatic status tracking may not fit your process.
+
+TaskFlow is designed for teams that coordinate work through git branches and pull requests. If your workflow does not use these patterns, the automatic status tracking will not apply. This tool will not support manual card dragging.
 
 ## Architecture
-TaskFlow is a stateless application running on Cloudflare Workers. It queries your git provider's API on each request to build the current project state. There is no application database, background worker, or sync process.
 
-## License
-MIT License.
+TaskFlow is a stateless application running on Cloudflare Workers, built on the Cocapn Fleet runtime. It fetches data from your git provider's API on each request and renders the board client-side. There is no caching or persistence layer.
+
+---
 
 Attribution: Superinstance & Lucineer (DiGennaro et al.).
 
----
-
-<div align="center">
-  <strong>Part of the Cocapn Fleet</strong><br>
-  <a href="https://the-fleet.casey-digennaro.workers.dev">Explore the Fleet</a> · <a href="https://cocapn.ai">Learn about Cocapn</a>
+<div>
+  <a href="https://the-fleet.casey-digennaro.workers.dev">The Fleet</a> •
+  <a href="https://cocapn.ai">Cocapn</a>
 </div>
