@@ -1,72 +1,50 @@
-<p align="center">
-  <img src="https://raw.githubusercontent.com/Lucineer/capitaine/master/docs/capitaine-logo.jpg" alt="Cocapn" width="120">
-</p>
+# TaskFlow
 
-<h1 align="center">Taskflow</h1>
+You stopped using project management tools because they kept drifting from the actual work.
 
-<p align="center">Task management and workflow automation agent. Part of the Lucineer fleet.</p>
+TaskFlow is a Kanban board that uses your git commit history as its only source of truth. It runs next to your repository on Cloudflare Workers.
 
-<p align="center">
-  <a href="#quick-start">Quick Start</a> ·
-  <a href="#the-fleet">The Fleet</a> ·
-  <a href="https://github.com/Lucineer/capitaine">Capitaine</a>
-</p>
+---
+
+## Why this exists
+Updating tickets feels like homework. You commit code, then remember to drag a card. You close a PR, then get pinged to update a status. TaskFlow aims to reduce this double work by observing what you already did in git.
+
+---
+
+### See it work
+Live instance: https://the-fleet.casey-digennaro.workers.dev/taskflow
 
 ---
 
 ## Quick Start
+1.  **Fork** this repository.
+2.  **Deploy** it to Cloudflare Workers (no build step).
+3.  Connect your git repository.
 
-```bash
-git clone https://github.com/Lucineer/taskflow.git
-cd taskflow
-# Follow repo-specific setup instructions
-```
+## What this does
+*   Uses your git history as the database. State is derived from commits, PRs, and merges.
+*   Runs on a Cloudflare Worker with zero external dependencies.
+*   You own and host the instance. No SaaS, no account, no API limits.
+*   Provides a Kanban board. It does not include time tracking, chat, or other project management features.
 
-## The Fleet
+## How it works
+*   **Git-driven updates**: Tasks can move between columns (Backlog, In Progress, etc.) based on linked pull requests and commits.
+*   **Standard Kanban**: Add, remove, or rename columns to match your workflow.
+*   **Immutable log**: All state changes are inferred from git history. You cannot manually edit a card's historical status.
+*   **BYOK (Bring Your Own Keys)**: All credentials are provided via your deployment's secret manager. No keys are embedded or sent elsewhere.
+*   **Fork-first**: This is a complete application you fork and modify, not a library you install.
 
-Taskflow is one of 110+ vessels in the Lucineer fleet. Every vessel is a git-native repo-agent — the repo IS the agent.
-
-<details>
-<summary><strong>⚓ The Fleet</strong></summary>
-
-**Flagship vessels**
-- [Capitaine (flagship)](https://github.com/Lucineer/capitaine)
-- [personallog-ai](https://github.com/Lucineer/personallog-ai)
-- [businesslog-ai](https://github.com/Lucineer/businesslog-ai)
-- [studylog-ai](https://github.com/Lucineer/studylog-ai)
-- [makerlog-ai](https://github.com/Lucineer/makerlog-ai)
-- [playerlog-ai](https://github.com/Lucineer/playerlog-ai)
-- [dmlog-ai](https://github.com/Lucineer/dmlog-ai)
-- [reallog-ai](https://github.com/Lucineer/reallog-ai)
-- [deckboss-ai](https://github.com/Lucineer/deckboss-ai)
-
-**Fleet services**
-- [Git-Agent (minimal)](https://github.com/Lucineer/git-agent)
-- [Fleet Catalog](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
-- [Fleet Orchestrator](https://github.com/Lucineer/fleet-orchestrator)
-- [Dead Reckoning Engine](https://github.com/Lucineer/dead-reckoning-engine)
-- [Dream Engine](https://github.com/Lucineer/dream-engine)
-- [Seed UI](https://github.com/Lucineer/seed-ui)
-
-**For power users**
-- [Cocapn Lite (tabula rasa)](https://github.com/Lucineer/cocapn-lite)
-- [Cocapn (core)](https://github.com/Lucineer/cocapn)
-- [ZeroClaw (framework)](https://github.com/Lucineer/zeroclaw)
-
-[View all 110+ repos →](https://github.com/orgs/Lucineer/repositories)
-[Fleet manifest →](https://github.com/Lucineer/capitaine/blob/master/docs/fleet/FLEET.md)
-
-</details>
-
-## Philosophy
-
-> The repo IS the agent. Fork it, give it a heartbeat, and wake up tomorrow to see where it sailed in the night.
-
-- **Fork-first** — Power users fork and customize. Casual users visit the domain.
-- **Git as ground truth** — The commit graph IS the state of the world.
-- **BYOK v2** — Zero keys in code. All keys via secrets store.
-- **Soft actualization** — Vessels evolve gently based on usage, not hard updates.
+## One limitation
+TaskFlow works best when development activity is linked to pull requests. Isolated commits without PRs may not trigger automatic column moves.
 
 ## License
+MIT License.
 
-MIT · Superinstance & Lucineer (DiGennaro et al.)
+Attribution: Superinstance & Lucineer (DiGennaro et al.).
+
+---
+
+<div align="center">
+  <strong>Part of the Cocapn Fleet</strong><br>
+  <a href="https://the-fleet.casey-digennaro.workers.dev">Explore the Fleet</a> · <a href="https://cocapn.ai">Learn about Cocapn</a>
+</div>
