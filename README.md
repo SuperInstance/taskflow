@@ -1,41 +1,46 @@
 # TaskFlow
 
-You stopped using project management tools because they kept drifting from the actual work.
-
-TaskFlow is a Kanban board that uses your git commit history as its only source of truth. It runs next to your repository on Cloudflare Workers.
+You don't need another project management board that falls out of sync.
 
 ---
 
 ## Why this exists
-Updating tickets feels like homework. You commit code, then remember to drag a card. You close a PR, then get pinged to update a status. TaskFlow aims to reduce this double work by observing what you already did in git.
+Most kanban tools require duplicating work: writing tickets, moving cards, and updating statuses separate from your actual commits and PRs. TaskFlow builds your board directly from your team's existing git history.
+
+TaskFlow is a Kanban board that uses your git commit history as its source of truth. It is powered by the Cocapn Fleet.
 
 ---
 
-### See it work
-Live instance: https://the-fleet.casey-digennaro.workers.dev/taskflow
+## Try the demo
+A live public instance is available: https://the-fleet.casey-digennaro.workers.dev/taskflow
+
+---
+
+## What it does
+-   **Status updates happen when you push code.** A card's column changes when you push a commit, open a pull request, or merge.
+-   **There is no separate database.** Git is your source of truth. There's nothing additional to back up, sync, or corrupt.
+-   **You host and control it.** This runs entirely on your Cloudflare account. Your credentials never leave your environment.
+-   **It reflects work as it happened.** The board is derived from immutable git history, not manually edited statuses.
+
+## Key Features
+*   **Git as the System of Record:** Task state is inferred from commits, PRs, and merges.
+*   **Zero Dependencies:** A single Cloudflare Worker with no build step and no npm packages.
+*   **Self-Hosted BYOK:** All credentials are stored in your Cloudflare Secrets. No data is sent to external servers.
+*   **Fork-First Philosophy:** This is a complete, working application. Fork it and modify it for your needs.
 
 ---
 
 ## Quick Start
-1.  **Fork** this repository.
-2.  **Deploy** it to Cloudflare Workers (no build step).
-3.  Connect your git repository.
+1.  Fork this repository.
+2.  Deploy it to Cloudflare Workers.
+3.  Configure your git provider credentials as environment secrets.
+4.  Your board will populate from your default branch.
 
-## What this does
-*   Uses your git history as the database. State is derived from commits, PRs, and merges.
-*   Runs on a Cloudflare Worker with zero external dependencies.
-*   You own and host the instance. No SaaS, no account, no API limits.
-*   Provides a Kanban board. It does not include time tracking, chat, or other project management features.
+## One Honest Limitation
+TaskFlow is designed for teams that coordinate work through git branches and pull requests. If your workflow doesn't use these mechanisms, the automatic status tracking may not fit your process.
 
-## How it works
-*   **Git-driven updates**: Tasks can move between columns (Backlog, In Progress, etc.) based on linked pull requests and commits.
-*   **Standard Kanban**: Add, remove, or rename columns to match your workflow.
-*   **Immutable log**: All state changes are inferred from git history. You cannot manually edit a card's historical status.
-*   **BYOK (Bring Your Own Keys)**: All credentials are provided via your deployment's secret manager. No keys are embedded or sent elsewhere.
-*   **Fork-first**: This is a complete application you fork and modify, not a library you install.
-
-## One limitation
-TaskFlow works best when development activity is linked to pull requests. Isolated commits without PRs may not trigger automatic column moves.
+## Architecture
+TaskFlow is a stateless application running on Cloudflare Workers. It queries your git provider's API on each request to build the current project state. There is no application database, background worker, or sync process.
 
 ## License
 MIT License.
